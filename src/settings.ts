@@ -22,25 +22,27 @@ export function shouldUsePeriodicNotesSettings(
 export function getDailyNoteSettings(): IPeriodicNoteSettings {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { internalPlugins, plugins } = <any>window.app;
+    const { plugins } = <any>window.app;
 
-    if (shouldUsePeriodicNotesSettings("daily")) {
+    // if (shouldUsePeriodicNotesSettings("daily")) {
       const { format, folder, template } =
         plugins.getPlugin("periodic-notes")?.settings?.daily || {};
+        console.info(plugins.getPlugin("periodic-notes"))
+        console.info(plugins.getPlugin("periodic-notes")?.options)
       return {
         format: format || DEFAULT_DAILY_NOTE_FORMAT,
         folder: folder?.trim() || "",
         template: template?.trim() || "",
       };
-    }
+    // }
 
-    const { folder, format, template } =
-      internalPlugins.getPluginById("daily-notes")?.instance?.options || {};
-    return {
-      format: format || DEFAULT_DAILY_NOTE_FORMAT,
-      folder: folder?.trim() || "",
-      template: template?.trim() || "",
-    };
+    // const { folder, format, template } =
+    //   internalPlugins.getPluginById("daily-notes")?.instance?.options || {};
+    // return {
+    //   format: format || DEFAULT_DAILY_NOTE_FORMAT,
+    //   folder: folder?.trim() || "",
+    //   template: template?.trim() || "",
+    // };
   } catch (err) {
     console.info("No custom daily note settings found!", err);
   }
