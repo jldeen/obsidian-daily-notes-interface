@@ -27,8 +27,8 @@ export function getDailyNoteSettings(): IPeriodicNoteSettings {
     if (shouldUsePeriodicNotesSettings("day")) {
       const { format, folder, template } =
         plugins.getPlugin("periodic-notes")?.options?.calendarSets[0]?.day || {};
-        console.info(plugins.getPlugin("periodic-notes"))
-        console.info(plugins.getPlugin("periodic-notes")?.options)
+        // console.info(plugins.getPlugin("periodic-notes"))
+        // console.info(plugins.getPlugin("periodic-notes")?.options)
       return {
         format: format || DEFAULT_DAILY_NOTE_FORMAT,
         folder: folder?.trim() || "",
@@ -60,8 +60,6 @@ export function getWeeklyNoteSettings(): IPeriodicNoteSettings {
     if (shouldUsePeriodicNotesSettings("week")) {
       const { format, folder, template } =
         plugins.getPlugin("periodic-notes")?.options?.calendarSets[0]?.week || {};
-        console.info(plugins.getPlugin("periodic-notes"));
-        console.info(plugins.getPlugin("periodic-notes")?.options);
       return {
         format: format || DEFAULT_WEEKLY_NOTE_FORMAT,
         folder: folder?.trim() || "",
