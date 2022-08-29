@@ -12,7 +12,7 @@ export function shouldUsePeriodicNotesSettings(
 ): boolean {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const periodicNotes = (<any>window.app).plugins.getPlugin("periodic-notes");
-  return periodicNotes && periodicNotes.options?.calendarSets[0]?.[periodicity]?.enabled;
+  return periodicNotes && periodicNotes.calendarSetManager?.getActiveSet()?.[periodicity]?.enabled;
 }
 
 /**
@@ -25,15 +25,13 @@ export function getDailyNoteSettings(): IPeriodicNoteSettings {
     const { internalPlugins, plugins } = <any>window.app;
 
     if (shouldUsePeriodicNotesSettings("day")) {
-      const { format, folder, template } =
-        plugins.getPlugin("periodic-notes")?.options?.calendarSets[0]?.day || {};
-        // console.info(plugins.getPlugin("periodic-notes"))
-        // console.info(plugins.getPlugin("periodic-notes")?.options)
-      return {
-        format: format || DEFAULT_DAILY_NOTE_FORMAT,
-        folder: folder?.trim() || "",
-        template: template?.trim() || "",
-      };
+        const { format, folder, template } =
+          plugins.getPlugin("periodic-notes")?.calendarSetManager?.getActiveSet()?.day || {};
+        return {
+          format: format || DEFAULT_DAILY_NOTE_FORMAT,
+          folder: folder?.trim() || "",
+          template: template?.trim() || "",
+        };
     }
 
     const { folder, format, template } =
@@ -59,7 +57,7 @@ export function getWeeklyNoteSettings(): IPeriodicNoteSettings {
 
     if (shouldUsePeriodicNotesSettings("week")) {
       const { format, folder, template } =
-        plugins.getPlugin("periodic-notes")?.options?.calendarSets[0]?.week || {};
+        plugins.getPlugin("periodic-notes")?.calendarSetManager?.getActiveSet()?.week || {};
       return {
         format: format || DEFAULT_WEEKLY_NOTE_FORMAT,
         folder: folder?.trim() || "",
@@ -90,7 +88,7 @@ export function getMonthlyNoteSettings(): IPeriodicNoteSettings {
   try {
     const settings =
       (shouldUsePeriodicNotesSettings("month") &&
-        pluginManager.getPlugin("periodic-notes")?.options?.calendarSets[0]?.month) ||
+        pluginManager.getPlugin("periodic-notes")?.calendarSetManager?.getActiveSet()?.month) ||
       {};
 
     return {
@@ -114,7 +112,7 @@ export function getQuarterlyNoteSettings(): IPeriodicNoteSettings {
   try {
     const settings =
       (shouldUsePeriodicNotesSettings("quarter") &&
-        pluginManager.getPlugin("periodic-notes")?.options?.calendarSets[0]?.quarter) ||
+        pluginManager.getPlugin("periodic-notes")?.calendarSetManager?.getActiveSet()?.quarter) ||
       {};
 
     return {
@@ -138,7 +136,7 @@ export function getYearlyNoteSettings(): IPeriodicNoteSettings {
   try {
     const settings =
       (shouldUsePeriodicNotesSettings("year") &&
-        pluginManager.getPlugin("periodic-notes")?.options?.calendarSets[0]?.year) ||
+        pluginManager.getPlugin("periodic-notes")?.calendarSetManager?.getActiveSet()?.year) ||
       {};
 
     return {
